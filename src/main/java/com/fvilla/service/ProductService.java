@@ -17,7 +17,7 @@ public class ProductService {
     ProductRepository productRepository;
 
     public List<ProductEntity> getAllProducts(){
-        List<ProductEntity> productEntityList = productRepository.findAll();
+        List<ProductEntity> productEntityList = productRepository.findAllByOrderByNameAsc();
         if(productEntityList.isEmpty()){
             return new ArrayList<ProductEntity>();
         }else{
@@ -42,6 +42,15 @@ public class ProductService {
         }else{
             productEntity = productRepository.save(productEntity);
             return productEntity;
+        }
+    }
+
+    public void deleteProductById(Long id){
+        Optional<ProductEntity> optionalProductEntity = productRepository.findById(id);
+        if(optionalProductEntity.isPresent()){
+            productRepository.deleteById(id);
+        }else{
+            throw new RecordNotFoundException("No product found for that ID",id);
         }
     }
 }

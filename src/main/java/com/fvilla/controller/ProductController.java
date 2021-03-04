@@ -31,4 +31,10 @@ public class ProductController {
         ProductEntity updated = productService.addOrUpdateProductById(productEntity);
         return new ResponseEntity<ProductEntity>(updated, new HttpHeaders(), HttpStatus.OK);
     }
+
+    @DeleteMapping("/{id}")
+    public HttpStatus deleteProductById(@PathVariable("id") Long id) throws RecordNotFoundException{
+        productService.deleteProductById(id);
+        return HttpStatus.FORBIDDEN;
+    }
 }
